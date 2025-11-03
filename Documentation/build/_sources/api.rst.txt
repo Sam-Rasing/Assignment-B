@@ -1,0 +1,6 @@
+API Reference
+=============
+.. automodule:: Assignment_A_main
+   :members:
+   :undoc-members:
+   :show-inheritance:
