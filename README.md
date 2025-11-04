@@ -10,21 +10,27 @@ For the scope of this project, I have selected the following two SDGs:
 The repository includes all files used and created when running the code file Assignment_A_main, which is placed in the Code folder.
 
 **Data**
+
 The data for this project is taken from several sources, which are all saved in the Data folder. 
+
 Data 1: AG_LND_SUST_PRXCSS.xlsx
 - SDG data is sourced from the UN Stats Data Portal. This file includes country-level data series for SDG 2.4.1 across all available years.
 - https://unstats.un.org/sdgs/dataportal/database.
+
 Data 2: ER_RSK_LST.xlsx
 - SDG data is sourced from the UN Stats Data Portal. This file includes country-level data series for SDG 2.4.1 across all available years.
 - https://unstats.un.org/sdgs/dataportal/database.
+
 Data 3: WPP2024_F01_LOCATIONS.xlsx
 - Country codes are obtained from the UN World Population Prospects Documentation.
 - https://population.un.org/wpp/downloads?folder=Documentation&group=Documentation.
+
 Data 4: WPP2024_TotalPopulationBySex.csv.gz
 - Total Population data for all countries is obtained from the UN World Population Prospects.
 - https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=CSV%20format. 
 
 **Result**
+
 The output of running the code is saved in the results folder, which includes the following: 
 Result 1: sdg_correlation.txt
 Result 2: bubble.png
