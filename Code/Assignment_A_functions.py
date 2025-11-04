@@ -16,7 +16,8 @@ import matplotlib.pyplot as plt
 
 def importing_data(data_folder: str, file_name: str, index: str, columns: list, var_name: str):
     """
-    Import SDG data from an Excel file and run sanity check
+    Import SDG data from an Excel file and run sanity check.
+    
     Parameters
     ----------
     data_folder : str
@@ -52,9 +53,10 @@ def importing_data(data_folder: str, file_name: str, index: str, columns: list, 
 
 #%% Filtering Data
 
-def filter_data(var1, var2):
+def filter_data(var1: pd.DataFrame, var2: pd.DataFrame):
     '''
-    Filtering two SDG datasets for most recent year for which data is available
+    Filtering two SDG datasets for most recent year for which data is available.
+    
     Parameters
     ----------
     var1 : DataFrame
@@ -116,9 +118,10 @@ def filter_data(var1, var2):
 #%% Data analysis
 
 #lillifors test
-def normality(var, var_name, var_range, alpha):
+def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     '''
-    Checking for normal distribution of a variable, by visual plot and a lilliefors test
+    Checking for normal distribution of a variable, by visual plot and a lilliefors test.
+    
     Parameters
     ----------
     numbers : list of int or float
@@ -188,9 +191,14 @@ def normality(var, var_name, var_range, alpha):
 
 
 #%%
-def Mahalanobis_test(var_1, var_2, alpha):
+def Mahalanobis_test(var_1: pd.Series, var_2: pd.Series, alpha: float):
     '''
-    Compute the average of even numbers in a list.
+    **Calculating Mahalanobis Distance**
+    
+    Compute the average of even numbers in a list. 
+    The code is taken from `here <https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance>`_ .
+
+    
     Parameters
     ----------
     numbers : list of int or float
@@ -257,9 +265,13 @@ def Mahalanobis_test(var_1, var_2, alpha):
     
 
 #%%
-def analysing_data(var1, var2, alpha, var1_range, var2_range, var1_name, var2_name):
+def analysing_data(var1: pd.Series, var2: pd.Series,
+                   var1_range: list, var2_range: list,
+                   var1_name: str, var2_name: str,
+                   alpha: float):   
     '''
     Compute the average of even numbers in a list.
+    
     Parameters
     ----------
     numbers : list of int or float

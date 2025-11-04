@@ -51,7 +51,7 @@ if __name__ == "__main__":
      
     # Filtering the data for most recent year for variables
     var1, var2, recent_year, common_countries = af.filter_data(var1, var2)
-    
+
 #%%
     '''
     Doing the analysis 
@@ -65,15 +65,10 @@ if __name__ == "__main__":
     '''
     alpha = 0.05 # select alpha for test: 0.01 -> 99% confidence, 0.05 -> 95% confidence, 0.1 -> 90% confidence 
     
-    p_values, correlation_result = af.analysing_data(var1[recent_year], 
-                                                     var2[recent_year], 
-                                                     alpha,
-                                                     var1_range,
-                                                     var2_range,
-                                                     var1_name,
-# %%
-                                                     var2_name)
-
+    p_values, correlation_result = af.analysing_data(var1[recent_year], var2[recent_year],
+                                                     var1_range, var2_range,
+                                                     var1_name,  var2_name,
+                                                     alpha)
     
     #%% Plotting results
     '''

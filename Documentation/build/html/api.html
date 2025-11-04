@@ -39,14 +39,19 @@
 <p>&#64;author: Sam</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.Mahalanobis_test">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the average of even numbers in a list.
-:param numbers:
-:type numbers: list of int or float
-:param A sequence of numeric values.:</p>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
+<dd><p><strong>Calculating Mahalanobis Distance</strong></p>
+<p>Compute the average of even numbers in a list.
+The code is taken from <a class="reference external" href="https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance">here</a> .</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numbers</strong> (<em>list</em><em> of </em><em>int</em><em> or </em><em>float</em>)</p></li>
+<li><p><strong>values.</strong> (<em>A sequence</em><em> of </em><em>numeric</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
 <li><p><em>float or None</em></p></li>
 <li><p><em>The mean of all even numbers in the list.</em></p></li>
 <li><p><em>Returns None if the list contains no even numbers.</em></p></li>
@@ -65,33 +70,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.analysing_data">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">analysing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.analysing_data" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the average of even numbers in a list.
-:param numbers:
-:type numbers: list of int or float
-:param A sequence of numeric values.:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>float or None</em></p></li>
-<li><p><em>The mean of all even numbers in the list.</em></p></li>
-<li><p><em>Returns None if the list contains no even numbers.</em></p></li>
-</ul>
-</p>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">None</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="Assignment_A_functions.correlation_test">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">correlation_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.correlation_test" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">analysing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.analysing_data" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the average of even numbers in a list.
 :param numbers:
 :type numbers: list of int or float
@@ -117,45 +96,53 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.filter_data">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">filter_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.filter_data" title="Link to this definition">¶</a></dt>
-<dd><p>Filtering two SDG datasets for most recent year for which data is available
-:param data_1: The first indicator variable
-:type data_1: DataFrame
-:param data_2: The second indicator variable
-:type data_2: DataFrame</p>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">filter_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.filter_data" title="Link to this definition">¶</a></dt>
+<dd><p>Filtering two SDG datasets for most recent year for which data is available.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dataframe with all the necessary columns, and the right index.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var1</strong> (<em>DataFrame</em>) – The first indicator variable</p></li>
+<li><p><strong>var2</strong> (<em>DataFrame</em>) – The second indicator variable</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dataframe</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>dataframe 1</em> – A dataframe with all the necessary columns, and the right index.</p></li>
+<li><p><em>dataframe 2</em> – A dataframe with all the necessary columns, and the right index</p></li>
+<li><p><em>recent_year</em> – The most recent common year in both datasets</p></li>
+<li><p><em>countries</em> – A list of common countries</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">importing_data</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">countries</span><span class="p">,</span> <span class="n">columns</span><span class="p">])</span>
-<span class="go">filt</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">importing_data</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
+<span class="go">data1_filtered</span>
+<span class="go">data2_filtered</span>
+<span class="go">2024</span>
+<span class="go">China, The Netherlads, Belgium</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.importing_data">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">importing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.importing_data" title="Link to this definition">¶</a></dt>
-<dd><p>Import SDG data from an Excel file and run sanity check
-:param data_folder: The name of the folder in which the data file is placed
-:type data_folder: str
-:param file_name: The name of the file
-:type file_name: str
-:param index: The name of the index header
-:type index: str
-:param columns: A list of used column headers.
-:type columns: list of str</p>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">importing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.importing_data" title="Link to this definition">¶</a></dt>
+<dd><p>Import SDG data from an Excel file and run sanity check.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A DataFrame with all the necessary columns, and the right index.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_folder</strong> (<em>str</em>) – The name of the folder in which the data file is placed</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – The name of the file</p></li>
+<li><p><strong>index</strong> (<em>str</em>) – The name of the index header</p></li>
+<li><p><strong>columns</strong> (<em>list</em><em> of </em><em>str</em>) – A list of used column headers.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>DataFrame</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with all the necessary columns, and the right index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -167,40 +154,17 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.normality">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.normality" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the average of even numbers in a list.
-:param numbers:
-:type numbers: list of int or float
-:param A sequence of numeric values.:</p>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.normality" title="Link to this definition">¶</a></dt>
+<dd><p>Checking for normal distribution of a variable, by visual plot and a lilliefors test.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>float or None</em></p></li>
-<li><p><em>The mean of all even numbers in the list.</em></p></li>
-<li><p><em>Returns None if the list contains no even numbers.</em></p></li>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numbers</strong> (<em>list</em><em> of </em><em>int</em><em> or </em><em>float</em>)</p></li>
+<li><p><strong>values.</strong> (<em>A sequence</em><em> of </em><em>numeric</em>)</p></li>
 </ul>
-</p>
 </dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">None</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="Assignment_A_functions.sanity_check">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">sanity_check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.sanity_check" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the average of even numbers in a list.
-:param numbers:
-:type numbers: list of int or float
-:param A sequence of numeric values.:</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
 <li><p><em>float or None</em></p></li>
 <li><p><em>The mean of all even numbers in the list.</em></p></li>
 <li><p><em>Returns None if the list contains no even numbers.</em></p></li>
@@ -241,11 +205,9 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation SAPY Sam Rasing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.Mahalanobis_test"><code class="docutils literal notranslate"><span class="pre">Mahalanobis_test()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.analysing_data"><code class="docutils literal notranslate"><span class="pre">analysing_data()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.correlation_test"><code class="docutils literal notranslate"><span class="pre">correlation_test()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.importing_data"><code class="docutils literal notranslate"><span class="pre">importing_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.normality"><code class="docutils literal notranslate"><span class="pre">normality()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.sanity_check"><code class="docutils literal notranslate"><span class="pre">sanity_check()</span></code></a></li>
 </ul>
 </li>
 </ul>
