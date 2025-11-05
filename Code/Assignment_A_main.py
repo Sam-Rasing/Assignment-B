@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+**Assignment_A_main.py**
 Created on Thu Sep 18 16:03:29 2025
 
 @author: Sam Rasing
 """
 
-#%% Import Modules
+# Importing the required modules
 import cProfile, pstats 
 import pandas as pd
 import geopandas as gpd
@@ -14,34 +15,39 @@ from matplotlib.colors import ListedColormap
 from matplotlib.patches import Patch
 import Assignment_A_functions as af
 
+# Code profiler for optimization
 pr=cProfile.Profile() 
 pr.enable() 
 
 if __name__ == "__main__":
+        
+    # Add your path to the root folder of this project called Assignment-A/
+    root_path = 'C:/Users/Sam/OneDrive/Documents/Industrial Ecology/SAPY/Assignment-A/'
     
-    root_path = 'C:/Users/Sam/OneDrive/Documents/Industrial Ecology/SAPY/Assignment-A/'# Add here your own root path to Assignment-A
-    
-#%% Importing Data
-    
-    '''
-    Process of importing, Sanity checks and filtering the data
-    
-    The social indicator is SDG2 > Sustinable agriculture. THis is obtained from
-    sdsdsdsd    
-    The environmental indicator is SDG15 > Sustinable agriculture. THis is obtained from ....
+#%% Importing and processing of required data.
 
     '''
-    # Step 1: Loading in the SDG data
-    var1_name = 'SDG 2.4.1: Sustainable Agriculture'
-    var2_name = 'SDG 15.5.1: Red list index'
+    This code block imports and processes time series data for two SDG indicators 
+    across multiple countries. The Data is obtained from the UN SDG Data Portal: 
+        - https://unstats.un.org/sdgs/dataportal/database. 
     
-    var1_range = [1, 5]
-    var2_range = [0, 1]
+    For this analysis the following two SDG indicators are selected:
+        - SDG 2.4.1: Sustainable Agriculture
+        - SDG 15.5.1: Red list index
     
+    '''
+    # Define the name of both SDGs:
+    var1_name = 'SDG 2.4.1: Sustainable Agriculture' 
+    var2_name = 'SDG 15.5.1: Red list index' 
+    
+    # Define the theoretical ranges for both SDGs:
+    var1_range = [1, 5] 
+    var2_range = [0, 1] 
+    
+    # Define the file names for both SDG datasets 
     data_folder = root_path + 'Data/'
     file_name = ['AG_LND_SUST_PRXCSS.xlsx',
                  'ER_RSK_LST.xlsx']
-    
     index = 'GeoAreaName'
     time_period = list(map(str, range(1800, 2026)))
     columns = ['GeoAreaName', 'GeoAreaCode'] + time_period
@@ -49,28 +55,29 @@ if __name__ == "__main__":
     var1 = af.importing_data(data_folder, file_name[0], index, columns, var1_name)
     var2 = af.importing_data(data_folder, file_name[1], index, columns, var2_name)
      
-    # Filtering the data for most recent year for variables
+    # Filtering the two SDG datasets for most recent year and common countries.
     var1, var2, recent_year, common_countries = af.filter_data(var1, var2)
 
-#%%
+#%% Statistial analysis
+
     '''
-    Doing the analysis 
+    use SDG country data for most recent year 
+    Define the confidence level 
+    lilliefors test will be used for normality check
+    Outliers are removed by mahanloni treatment
+    Based on normality a paramteric or non paramteric will be used. 
     
-    Select the alpha for this study
     
-    Outliers are thrown based on mahalanobis distance and a shi quare reflecting the degree of freedoms of 2
-    
-    The outcome is the p_values for the normality test for both variables, and the correlation test for parametric 
-    or non-parametric test depending on the distrubtion of the variables 
-    '''
+    '''   
     alpha = 0.05 # select alpha for test: 0.01 -> 99% confidence, 0.05 -> 95% confidence, 0.1 -> 90% confidence 
     
-    p_values, correlation_result = af.analysing_data(var1[recent_year], var2[recent_year],
-                                                     var1_range, var2_range,
-                                                     var1_name,  var2_name,
-                                                     alpha)
+    norm_p_values, p_values, correlation_result = af.analysing_data(var1[recent_year], var2[recent_year],
+                                                                    var1_range, var2_range,
+                                                                    var1_name,  var2_name,
+                                                                    alpha)
     
-    #%% Plotting results
+    #%% Plotting the results
+    
     '''
     Plotting the results of the analysis
     XX
@@ -91,10 +98,11 @@ if __name__ == "__main__":
 
     usecols = ['ISO3_code', 'Time', 'PopTotal', 'LocTypeName', 'Location']
     pop = pd.read_csv(data_folder + 'WPP2024_TotalPopulationBySex.csv.gz', 
-                      usecols=usecols)
+                      usecols=usecols,
+                      low_memory=False)
     
     pop = pop[(pop['LocTypeName'] == 'Country/Area') & (pop['Time'] == int(recent_year))] 
- 
+    
     pop = pop.merge(area_codes, left_on='ISO3_code', right_on='ISO3 Alpha-code', how='left')
     pop = pop[pop['Location code'].isin(common_countries)]
     
@@ -104,16 +112,22 @@ if __name__ == "__main__":
     # Bubble plot
     top_10 = pop.nlargest(10, 'PopTotal').index.tolist()
     colors = ['royalblue' if country in top_10 else 'cornflowerblue' for country in pop.index]
-
-    plt.scatter(var1[recent_year], var2[recent_year], s=pop['PopTotal']/1e3, c=colors, alpha=0.5)
+    
+   # x = var1[recent_year]
+    x = var1.loc[var1['GeoAreaCode'].isin(pop['Location code']), recent_year]
+    y = var2.loc[var2['GeoAreaCode'].isin(pop['Location code']), recent_year]
+    
+    size = pop['PopTotal']/1e3
+    
+    plt.scatter(x, y, size, c=colors, alpha=0.5)
    
     for country in top_10:
         plt.annotate(country, (var1.loc[country, recent_year], var2.loc[country, recent_year]), 
                          fontsize=9, ha='center', va='center',)
     
-    
-    plt.xlim(1, 5)
-    plt.ylim(0, 1)
+    # Add legends for size of the bubbles
+    plt.xlim(var1_range)
+    plt.ylim(var2_range)
     plt.xlabel(var1_name)
     plt.ylabel(var2_name)   
     plt.savefig('../Results/bubble_plot.png')   
@@ -146,9 +160,9 @@ if __name__ == "__main__":
        
     world_map.plot(column=world_map.columns[-2], 
                    legend=True, 
-                   cmap='OrRd_r',
-                   vmin=1,                # Min value for SDG indicator
-                   vmax=5,                # Max value for SDG indicator
+                   cmap='OrRd_r', # if low value is bad to this
+                   vmin=var1_range[0],                # Min value for SDG indicator
+                   vmax=var1_range[1],                # Max value for SDG indicator
                    missing_kwds={'color': 'lightgrey',  "label": "Missing values"}, 
                    legend_kwds={"label": var1_name, "orientation": "horizontal"})
     
@@ -163,8 +177,8 @@ if __name__ == "__main__":
     world_map.plot(column=world_map.columns[-1], 
                    legend=True, 
                    cmap='OrRd',
-                   vmin=0,                # Min value for SDG indicator
-                   vmax=1,                # Max value for SDG indicator
+                   vmin=var2_range[0],                # Min value for SDG indicator
+                   vmax=var2_range[1],                # Max value for SDG indicator
                    missing_kwds={'color': 'lightgrey',  "label": "Missing values"}, 
                    legend_kwds={"label": var2_name, "orientation": "horizontal"})
     
@@ -230,7 +244,7 @@ if __name__ == "__main__":
     Exporting the results to a txt file
     
     '''
-    f = open('../Results/my_results.txt', 'w')
+    f = open('../Results/sdg_correlation.txt', 'w')
     
     print('SDG indicator #1:', var1_name,'\n'
           'SDG indicator #2:', var2_name,'\n',

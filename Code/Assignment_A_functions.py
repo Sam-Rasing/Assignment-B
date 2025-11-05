@@ -1,41 +1,53 @@
 # -*- coding: utf-8 -*-
 """
+**Assignment_A_function.py**
 Created on Sun Oct 19 13:57:40 2025
 
 @author: Sam
 """
 
+# Importing the required modules
 import pandas as pd
 import numpy as np
 from statsmodels.stats.diagnostic import lilliefors
-from scipy.spatial.distance import mahalanobis
 from scipy.stats import spearmanr, pearsonr, chi2, norm
 import matplotlib.pyplot as plt
+
+'''
+In this code file you find all the code for the functions used in Assignment_A_main.py. 
+For each function code documentation is added to provide the user a better understanding of the code 
+'''
 
 #%% Importing Data
 
 def importing_data(data_folder: str, file_name: str, index: str, columns: list, var_name: str):
     """
-    Import SDG data from an Excel file and run sanity check.
+    Import SDG Data
+
+    Load the SDG data from an Excel file obtained from
+    `the UN Database <https://unstats.un.org/sdgs/dataportal/database>`_
+    and perform basic sanity checks.
     
     Parameters
     ----------
     data_folder : str
-        The name of the folder in which the data file is placed
+        Path to the folder containing the data file.
     file_name : str
-        The name of the file
+        The name of the Excel file.
     index : str
-        The name of the index header
+        Column to use as the DataFrame index.
     columns : list of str
-        A list of used column headers.
+        list of column headers to include.
     Returns
     -------
-    DataFrame
-        A DataFrame with all the necessary columns, and the right index.
+    pd.DataFrame
+        A DataFrame containing the selected columns with the specified index.
     Examples
     --------
-    >>> importing_data([data, file, countries, columns])
-    DataFrame
+    >>> importing_data(data_folder, file_name, index, columns])
+    Country SDG_score
+    CountryA 15
+    CountryB 20
     """        
     
     df = None
@@ -55,31 +67,35 @@ def importing_data(data_folder: str, file_name: str, index: str, columns: list, 
 
 def filter_data(var1: pd.DataFrame, var2: pd.DataFrame):
     '''
-    Filtering two SDG datasets for most recent year for which data is available.
+    Filter SDG data
+
+    Filtering the two SDG datasets for most recent year for which both indicators are available. Countries with missing values for one or
+    both indicator are removed.
     
     Parameters
     ----------
-    var1 : DataFrame
-        The first indicator variable 
-    var2 : DataFrame 
-        The second indicator variable
+    var1 : pd.DataFrame
+        The first indicator dataset 
+    var2 : pd.DataFrame 
+        The second indicator dataset
     Returns
     -------
-    dataframe 1
-        A dataframe with all the necessary columns, and the right index.
-    dataframe 2
-        A dataframe with all the necessary columns, and the right index
-    recent_year
-        The most recent common year in both datasets
-    countries
-        A list of common countries
+    dataframe 1: pd.DataFrame
+        Filtered version of the first dataset based on most recent year and correct index.
+    dataframe 2: pd.DataFrame
+        Filtered version of the second dataset based on most recent year and correct index.
+    recent_year: int
+        The most recent common year present in both datasets.
+    countries: list of str
+        List of countries present in both datasets.
     Examples
     --------
-    >>> importing_data([data1, data2])
-    data1_filtered
-    data2_filtered
+    >>> filter_data(var1, var2)
+    filtered_var1, filtered_var2, recent_year, common_countries = filter_sdg_data(data1, data2)
+    recent_year
     2024
-    China, The Netherlads, Belgium
+    common_countries
+    'China', 'The Netherlands', 'Belgium'
     '''
     
     var1.dropna(inplace=True)
@@ -115,28 +131,39 @@ def filter_data(var1: pd.DataFrame, var2: pd.DataFrame):
     
     return var1, var2, recent_year, common_countries
 
-#%% Data analysis
+#%% Normality check
 
-#lillifors test
 def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     '''
-    Checking for normal distribution of a variable, by visual plot and a lilliefors test.
+    Normality Check
+
+    Assess whether a variable follows a normal distribution using a visual plot and a Lilliefors test.
+    The assessment is based on a specified significance level (alpha).
     
     Parameters
     ----------
-    numbers : list of int or float
-    A sequence of numeric values.
+    var: pd.Series
+        The country values of SDG indicator to test for normality.
+    var_name: str
+        The name of the variable.
+    var_range: list
+        The minimum and maximum possible value of the SDG indicator.
+    alpha: float
+        The significance level for the lillieforst test.
+    
     Returns
     -------
-    float or None
-    The mean of all even numbers in the list.
-    Returns None if the list contains no even numbers.
+    p_value: float
+        The obeserved p-value from the lilliefors test.
+    
     Examples
     --------
-    >>> average_of_evens([1, 2, 3, 4, 5])
-    3.0
-    >>> average_of_evens([1, 3, 5])
-    None
+    >>> p_value = normality(variable_1, 'name_1', [0, 10], 0.5)
+    p_value
+    0.019
+    >>> p_value = normality(variable_2, 'name_2', [1, 2], 0.01)
+    p_value
+    0.59
     '''
     stat, p_value = lilliefors(var)
        
@@ -176,120 +203,174 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     
     return p_value 
 
+#%% Outlier treatment based on Mahalanobis distances
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#%%
-def Mahalanobis_test(var_1: pd.Series, var_2: pd.Series, alpha: float):
+def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float):
     '''
-    **Calculating Mahalanobis Distance**
-    
-    Compute the average of even numbers in a list. 
-    The code is taken from `here <https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance>`_ .
+    Calculating the Mahalanobis Distance
+  
+    Compute the Mahalanobis distance for two variables to identify multivariate outliers.
+    An outlier threshold is determined based on the specified significance level (alpha) and used to generate an outlier mask.
+    The implementation is adapted from `Stackoverflow <https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance>`_.
 
-    
     Parameters
     ----------
-    numbers : list of int or float
-    A sequence of numeric values.
+    var_1: pd.Series
+        First variable for the Mahalanobis distance calculation.
+    var_2: pd.Series
+        Second variable for the Mahalanobis distance calculation
+    alpha: float
+        The significance level to determine the outlier treshold
     Returns
     -------
-    float or None
-    The mean of all even numbers in the list.
-    Returns None if the list contains no even numbers.
+    mahalanobis_dist: list of str
+        The Mahalanobis distances for each observation.
+    threshold: float
+        The distance threshold for which an observation is considered an outlier
+    outliers_mask: list of bool
+        Boolean mask indicating which observations are outliers (True) and which are not (False)
     Examples
     --------
-    >>> average_of_evens([1, 2, 3, 4, 5])
-    3.0
-    >>> average_of_evens([1, 3, 5])
-    None
+    >>> mahalanobis_dist, threshold, outliers_mask = Mahalanobis_test(var1, var2, 0.05)
+    mahalanobis_dist
+    [2.3, 2.4, 3.1]
+    threshold
+    2.9
+    outliers_mask
+    [False, False, True]
     '''
-     
-    # Inverse matrix
-    covariance_matrix = np.cov(var_1, var_2, rowvar=False)  
-    inv_covariance_matrix = np.linalg.inv(covariance_matrix)
-    # mean vector 
-    mean_vector = np.array([var_1.mean(), var_2.mean()])
+    
+    data = pd.concat([var1, var2], axis=1)
+    covariance_matrix = np.cov(data, rowvar=False)  
+    
+    if is_pos_def(covariance_matrix):
+        inv_covariance_matrix = np.linalg.inv(covariance_matrix)
+        if is_pos_def(inv_covariance_matrix):
+            vars_mean = data.mean(axis=0)
+            diff = data - vars_mean
+            mahalanobis_dist = []
+            for i in range(len(diff)):
+                mahalanobis_dist.append(np.sqrt(diff.iloc[i].dot(inv_covariance_matrix).dot(diff.iloc[i])))
+                
+            degree_of_freedom = 2 
+            md_square = np.square(mahalanobis_dist)
+            
+            p_values = 1 - chi2.cdf(md_square, degree_of_freedom)
 
-    mahalanobis_dist = []
-    for i in var_1.index:
-        i_vector = (var_1.loc[i], var_2.loc[i])
-        distance = mahalanobis(i_vector, mean_vector, inv_covariance_matrix)
-        mahalanobis_dist.append(distance)
-     
-    threshold = chi2.ppf((1 - alpha), 2)
-    
-    outliers_mask = mahalanobis_dist < threshold
-    
-    print('\n=== MAHALANOBIS TEST ===\n',
-          '\nOUTLIER THRESHOLD: ', threshold,
-          '\nMAX MAHALANOBIS DISTANCE:', np.max(mahalanobis_dist),
-          '\nTOTAL OUTLIERS:', np.sum(outliers_mask == False))
-    
-    # Create the plot
-    plt.figure(figsize=(10, 6))
-    plt.plot(mahalanobis_dist, 
-             color='royalblue', 
-             marker='o',
-             linestyle='',
-             label='Mahalanobis Distances')  # 'bo-' means blue circles connected by lines
-    
-    plt.axhline(y=threshold, 
-                color='red', 
-                linestyle='--', 
-                label='Threshold')
-    
-    plt.xlim(0, len(mahalanobis_dist))
-    plt.xlabel('Observation Number')
-    plt.ylabel('Mahalanobis Distance')
-    plt.title('Mahalanobis Distances with Threshold')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig('../Results/Mahalanobis_distances.png')
-    plt.show()
+            outlier_mask = p_values < alpha
+            non_outlier_mask = p_values >= alpha
+            
+            plt.figure(figsize=(6,6))
+            plt.scatter(data.iloc[non_outlier_mask, 0], data.iloc[non_outlier_mask, 1], color='blue', label='Non-outliers')
+            plt.scatter(data.iloc[outlier_mask, 0], data.iloc[outlier_mask, 1], color='red', label='Outliers')
+            plt.xlabel('X')
+            plt.ylabel('Y')
+            plt.title('Scatter Plot with Outliers Highlighted')
+            plt.legend()
+            plt.grid(True)
+            plt.show()
+            
+            print('\n=== MAHALANOBIS TEST ===\n',
+                  '\nOUTLIER THRESHOLD: ', p_values,
+                  '\nMAX MAHALANOBIS DISTANCE:', np.max(mahalanobis_dist),
+                  '\nTOTAL OUTLIERS:', np.sum(outlier_mask == True))
+            return mahalanobis_dist, p_values, non_outlier_mask
+        else:
+            print("Error: Inverse of Covariance Matrix is not positive definite!")
+    else:
+        print("Error: Covariance Matrix is not positive definite!")
 
-    # remove outliers based on distance
-    return mahalanobis_dist, threshold, outliers_mask
+
+#%% Positive definite check
+
+def is_pos_def(A):
+    """
+    Positive definite check
+
+    Check if a given square matrix is symmetric and positive definite.
+    This function is obtained from `Stackoverflow <https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance>`_.
+    Parameters
+    ----------
+    A : pd.DataFrame
+        A square matrix to check.
+        
+    Returns
+    -------
+    bool
+        True if the matrix is symmetric and positive definite, False otherwise.
+
+    Example
+    -------
+    >>> A = pd.DataFrame([[2, -1], [-1, 2]])
+    >>> is_pos_def(A)
+    True
+    >>> B = pd.DataFrame([[1, 2], [2, 1]])
+    >>> is_pos_def(B)
+    False
+    """
+    if np.allclose(A, A.T):
+        try:
+            np.linalg.cholesky(A)
+            return True
+        except np.linalg.LinAlgError:
+            return False
+    else:
+        return False
+
+
 
     
 
-#%%
+#%% Statistical analysis
 def analysing_data(var1: pd.Series, var2: pd.Series,
                    var1_range: list, var2_range: list,
                    var1_name: str, var2_name: str,
                    alpha: float):   
     '''
-    Compute the average of even numbers in a list.
+    Data Analysis
+   
+    Calculate the correlation between two SDG indicators based.
+    - If both variables are normally distributed, a parametric test (Pearson correlation) is applied.
+    - If not, a non-parametric test (Spearman correlation) is used.
+    Outliers are removed based on the Mahalanobis distance before performing the correlation analysis.
     
     Parameters
     ----------
-    numbers : list of int or float
-    A sequence of numeric values.
+    var1: pd.Series
+        The first SDG indicator series.
+    var2: pd.Series
+        The second SDG indicator series.
+    var1_range: list 
+        Theoretical range of first SDG indicator.
+    var2_range: list
+        Theoretical range of second SDG indicator.
+    var1_name: str 
+        Name of first SDG indicator.
+    var2_name: str
+        Name of second SDG indicator.
+    alpha: float
+        Significance level used for normality, outlier detection and correlation test.
     Returns
     -------
-    float or None
-    The mean of all even numbers in the list.
-    Returns None if the list contains no even numbers.
+    norm_p_values: list of float
+        P-values from the Lilliefors normality test for both variables.
+    correlation: float
+        Correlation coefficient calculated using Pearson or Spearman test.
+    p_value:
+        P-value associated with the correlation test.
     Examples
     --------
-    >>> average_of_evens([1, 2, 3, 4, 5])
-    3.0
-    >>> average_of_evens([1, 3, 5])
-    None
+    >>> norm_p_values, correlation, p_value = analysing_data(var1, var2, var1_range, var2_range, 'SDG 1', 'SDG 12', 0.05)
+    norm_p_values
+    [0.12, 0.08]
+    correlation
+    0.72
+    p_value
+    0.003
     '''
     # Testing for normality
-    p_values = [normality(var1, var1_name, var1_range, alpha),
+    norm_p_values = [normality(var1, var1_name, var1_range, alpha),
                 normality(var2, var2_name, var2_range, alpha)] 
        
     # Outlier removal
@@ -299,22 +380,22 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
     var2_no_outliers = var2[outliers_mask]
      
     # Testing for correlation        
-    if p_values[0] <= 0.05 or p_values[1] <= 0.05:  # One or both variables are normal distributed, therefore non-parametric test is selected 
+    if norm_p_values[0] <= 0.05 or norm_p_values[1] <= 0.05:  # One or both variables are normal distributed, therefore non-parametric test is selected 
     
         correlation, p_value = spearmanr(var1_no_outliers, var2_no_outliers)
         print('\n=== SPEARMAN TEST ===\n',
               '\nCORRELATION:', correlation,
-              '\P-VALUE:', p_value,
+              '\nP-VALUE:', p_value,
               '\nP <= 0.05: Correlation is significant' if p_value <= 0.05 
-              else '\nP > 0.05: Correlation is insignificant')
+              else '\nP > 0.05: Correlation is insignificant\n')
         
     else :
         correlation, p_value = pearsonr(var1_no_outliers, var2_no_outliers) # Both variables are normal distributed, therefore parametric test is selected
         print('\n=== PEARSON TEST ===\n',
               '\nPEARSON Rho:', correlation,
-              '\P-value:', p_value,
+              '\nP-value:', p_value,
               '\np <= 0.05: Correlation is significant' if p_value <= 0.05 
-              else '\np > 0.05: Correlation is insignificant')
+              else '\np > 0.05: Correlation is insignificant\n')
     
     # Fit linear regression (slope and intercept)
     slope, intercept = np.polyfit(var1, var2, 1)
@@ -338,4 +419,4 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
     plt.savefig('../Results/scatter.png')
     plt.show()
   
-    return p_values, correlation
+    return norm_p_values, correlation, p_value

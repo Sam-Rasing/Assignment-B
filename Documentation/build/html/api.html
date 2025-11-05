@@ -33,37 +33,44 @@
             
   <section id="module-Assignment_A_main">
 <span id="code-documentation-sapy-sam-rasing"></span><h1>Code Documentation SAPY Sam Rasing<a class="headerlink" href="#module-Assignment_A_main" title="Link to this heading">¶</a></h1>
-<p>Created on Thu Sep 18 16:03:29 2025</p>
+<p><strong>Assignment_A_main.py</strong>
+Created on Thu Sep 18 16:03:29 2025</p>
 <p>&#64;author: Sam Rasing</p>
-<p id="module-Assignment_A_functions">Created on Sun Oct 19 13:57:40 2025</p>
+<p id="module-Assignment_A_functions"><strong>Assignment_A_function.py</strong>
+Created on Sun Oct 19 13:57:40 2025</p>
 <p>&#64;author: Sam</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.Mahalanobis_test">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
-<dd><p><strong>Calculating Mahalanobis Distance</strong></p>
-<p>Compute the average of even numbers in a list.
-The code is taken from <a class="reference external" href="https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance">here</a> .</p>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
+<dd><p>Calculating the Mahalanobis Distance</p>
+<p>Compute the Mahalanobis distance for two variables to identify multivariate outliers.
+An outlier threshold is determined based on the specified significance level (alpha) and used to generate an outlier mask.
+The implementation is adapted from <a class="reference external" href="https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance">Stackoverflow</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>numbers</strong> (<em>list</em><em> of </em><em>int</em><em> or </em><em>float</em>)</p></li>
-<li><p><strong>values.</strong> (<em>A sequence</em><em> of </em><em>numeric</em>)</p></li>
+<li><p><strong>var_1</strong> (<em>pd.Series</em>) – First variable for the Mahalanobis distance calculation.</p></li>
+<li><p><strong>var_2</strong> (<em>pd.Series</em>) – Second variable for the Mahalanobis distance calculation</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The significance level to determine the outlier treshold</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>float or None</em></p></li>
-<li><p><em>The mean of all even numbers in the list.</em></p></li>
-<li><p><em>Returns None if the list contains no even numbers.</em></p></li>
+<li><p><strong>mahalanobis_dist</strong> (<em>list of str</em>) – The Mahalanobis distances for each observation.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – The distance threshold for which an observation is considered an outlier</p></li>
+<li><p><strong>outliers_mask</strong> (<em>list of bool</em>) – Boolean mask indicating which observations are outliers (True) and which are not (False)</p></li>
 </ul>
 </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">None</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mahalanobis_dist</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">outliers_mask</span> <span class="o">=</span> <span class="n">Mahalanobis_test</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="go">mahalanobis_dist</span>
+<span class="go">[2.3, 2.4, 3.1]</span>
+<span class="go">threshold</span>
+<span class="go">2.9</span>
+<span class="go">outliers_mask</span>
+<span class="go">[False, False, True]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -71,25 +78,40 @@ The code is taken from <a class="reference external" href="https://stackoverflow
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.analysing_data">
 <span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">analysing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.analysing_data" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the average of even numbers in a list.
-:param numbers:
-:type numbers: list of int or float
-:param A sequence of numeric values.:</p>
+<dd><p>Data Analysis</p>
+<p>Calculate the correlation between two SDG indicators based.
+- If both variables are normally distributed, a parametric test (Pearson correlation) is applied.
+- If not, a non-parametric test (Spearman correlation) is used.
+Outliers are removed based on the Mahalanobis distance before performing the correlation analysis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><em>float or None</em></p></li>
-<li><p><em>The mean of all even numbers in the list.</em></p></li>
-<li><p><em>Returns None if the list contains no even numbers.</em></p></li>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var1</strong> (<em>pd.Series</em>) – The first SDG indicator series.</p></li>
+<li><p><strong>var2</strong> (<em>pd.Series</em>) – The second SDG indicator series.</p></li>
+<li><p><strong>var1_range</strong> (<em>list</em>) – Theoretical range of first SDG indicator.</p></li>
+<li><p><strong>var2_range</strong> (<em>list</em>) – Theoretical range of second SDG indicator.</p></li>
+<li><p><strong>var1_name</strong> (<em>str</em>) – Name of first SDG indicator.</p></li>
+<li><p><strong>var2_name</strong> (<em>str</em>) – Name of second SDG indicator.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Significance level used for normality, outlier detection and correlation test.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>norm_p_values</strong> (<em>list of float</em>) – P-values from the Lilliefors normality test for both variables.</p></li>
+<li><p><strong>correlation</strong> (<em>float</em>) – Correlation coefficient calculated using Pearson or Spearman test.</p></li>
+<li><p><em>p_value</em> – P-value associated with the correlation test.</p></li>
 </ul>
 </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">None</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">norm_p_values</span><span class="p">,</span> <span class="n">correlation</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">analysing_data</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">,</span> <span class="n">var1_range</span><span class="p">,</span> <span class="n">var2_range</span><span class="p">,</span> <span class="s1">&#39;SDG 1&#39;</span><span class="p">,</span> <span class="s1">&#39;SDG 12&#39;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="go">norm_p_values</span>
+<span class="go">[0.12, 0.08]</span>
+<span class="go">correlation</span>
+<span class="go">0.72</span>
+<span class="go">p_value</span>
+<span class="go">0.003</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -97,30 +119,33 @@ The code is taken from <a class="reference external" href="https://stackoverflow
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.filter_data">
 <span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">filter_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.filter_data" title="Link to this definition">¶</a></dt>
-<dd><p>Filtering two SDG datasets for most recent year for which data is available.</p>
+<dd><p>Filter SDG data</p>
+<p>Filtering the two SDG datasets for most recent year for which both indicators are available. Countries with missing values for one or
+both indicator are removed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var1</strong> (<em>DataFrame</em>) – The first indicator variable</p></li>
-<li><p><strong>var2</strong> (<em>DataFrame</em>) – The second indicator variable</p></li>
+<li><p><strong>var1</strong> (<em>pd.DataFrame</em>) – The first indicator dataset</p></li>
+<li><p><strong>var2</strong> (<em>pd.DataFrame</em>) – The second indicator dataset</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>dataframe 1</em> – A dataframe with all the necessary columns, and the right index.</p></li>
-<li><p><em>dataframe 2</em> – A dataframe with all the necessary columns, and the right index</p></li>
-<li><p><em>recent_year</em> – The most recent common year in both datasets</p></li>
-<li><p><em>countries</em> – A list of common countries</p></li>
+<li><p><strong>dataframe 1</strong> (<em>pd.DataFrame</em>) – Filtered version of the first dataset based on most recent year and correct index.</p></li>
+<li><p><strong>dataframe 2</strong> (<em>pd.DataFrame</em>) – Filtered version of the second dataset based on most recent year and correct index.</p></li>
+<li><p><strong>recent_year</strong> (<em>int</em>) – The most recent common year present in both datasets.</p></li>
+<li><p><strong>countries</strong> (<em>list of str</em>) – List of countries present in both datasets.</p></li>
 </ul>
 </p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">importing_data</span><span class="p">([</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
-<span class="go">data1_filtered</span>
-<span class="go">data2_filtered</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filter_data</span><span class="p">(</span><span class="n">var1</span><span class="p">,</span> <span class="n">var2</span><span class="p">)</span>
+<span class="go">filtered_var1, filtered_var2, recent_year, common_countries = filter_sdg_data(data1, data2)</span>
+<span class="go">recent_year</span>
 <span class="go">2024</span>
-<span class="go">China, The Netherlads, Belgium</span>
+<span class="go">common_countries</span>
+<span class="go">&#39;China&#39;, &#39;The Netherlands&#39;, &#39;Belgium&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -128,26 +153,58 @@ The code is taken from <a class="reference external" href="https://stackoverflow
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.importing_data">
 <span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">importing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.importing_data" title="Link to this definition">¶</a></dt>
-<dd><p>Import SDG data from an Excel file and run sanity check.</p>
+<dd><p>Import SDG Data</p>
+<p>Load the SDG data from an Excel file obtained from
+<a class="reference external" href="https://unstats.un.org/sdgs/dataportal/database">the UN Database</a>
+and perform basic sanity checks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data_folder</strong> (<em>str</em>) – The name of the folder in which the data file is placed</p></li>
-<li><p><strong>file_name</strong> (<em>str</em>) – The name of the file</p></li>
-<li><p><strong>index</strong> (<em>str</em>) – The name of the index header</p></li>
-<li><p><strong>columns</strong> (<em>list</em><em> of </em><em>str</em>) – A list of used column headers.</p></li>
+<li><p><strong>data_folder</strong> (<em>str</em>) – Path to the folder containing the data file.</p></li>
+<li><p><strong>file_name</strong> (<em>str</em>) – The name of the Excel file.</p></li>
+<li><p><strong>index</strong> (<em>str</em>) – Column to use as the DataFrame index.</p></li>
+<li><p><strong>columns</strong> (<em>list</em><em> of </em><em>str</em>) – list of column headers to include.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A DataFrame with all the necessary columns, and the right index.</p>
+<dd class="field-even"><p>A DataFrame containing the selected columns with the specified index.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DataFrame</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">importing_data</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">countries</span><span class="p">,</span> <span class="n">columns</span><span class="p">])</span>
-<span class="go">DataFrame</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">importing_data</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">])</span>
+<span class="go">Country SDG_score</span>
+<span class="go">CountryA 15</span>
+<span class="go">CountryB 20</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Assignment_A_functions.is_pos_def">
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">is_pos_def</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.is_pos_def" title="Link to this definition">¶</a></dt>
+<dd><p>Positive definite check</p>
+<p>Check if a given square matrix is symmetric and positive definite.
+This function is obtained from <a class="reference external" href="https://stackoverflow.com/questions/46827580/multivariate-outlier-removal-with-mahalanobis-distance">Stackoverflow</a>.
+:param A: A square matrix to check.
+:type A: pd.DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the matrix is symmetric and positive definite, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">A</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_pos_def</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_pos_def</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="go">False</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -155,30 +212,32 @@ The code is taken from <a class="reference external" href="https://stackoverflow
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.normality">
 <span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.normality" title="Link to this definition">¶</a></dt>
-<dd><p>Checking for normal distribution of a variable, by visual plot and a lilliefors test.</p>
+<dd><p>Normality Check</p>
+<p>Assess whether a variable follows a normal distribution using a visual plot and a Lilliefors test.
+The assessment is based on a specified significance level (alpha).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>numbers</strong> (<em>list</em><em> of </em><em>int</em><em> or </em><em>float</em>)</p></li>
-<li><p><strong>values.</strong> (<em>A sequence</em><em> of </em><em>numeric</em>)</p></li>
+<li><p><strong>var</strong> (<em>pd.Series</em>) – The country values of SDG indicator to test for normality.</p></li>
+<li><p><strong>var_name</strong> (<em>str</em>) – The name of the variable.</p></li>
+<li><p><strong>var_range</strong> (<em>list</em>) – The minimum and maximum possible value of the SDG indicator.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The significance level for the lillieforst test.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><ul class="simple">
-<li><p><em>float or None</em></p></li>
-<li><p><em>The mean of all even numbers in the list.</em></p></li>
-<li><p><em>Returns None if the list contains no even numbers.</em></p></li>
+<li><p><strong>p_value</strong> (<em>float</em>) – The obeserved p-value from the lilliefors test.</p></li>
+<li><p><em>——–</em></p></li>
+<li><p><em>&gt;&gt;&gt; p_value = normality(variable_1, ‘name_1’, [0, 10], 0.5)</em></p></li>
+<li><p><em>p_value</em></p></li>
+<li><p><em>0.019</em></p></li>
+<li><p><em>&gt;&gt;&gt; p_value = normality(variable_2, ‘name_2’, [1, 2], 0.01)</em></p></li>
+<li><p><em>p_value</em></p></li>
+<li><p><em>0.59</em></p></li>
 </ul>
 </p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">3.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">average_of_evens</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="go">None</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </section>
@@ -207,6 +266,7 @@ The code is taken from <a class="reference external" href="https://stackoverflow
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.analysing_data"><code class="docutils literal notranslate"><span class="pre">analysing_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.importing_data"><code class="docutils literal notranslate"><span class="pre">importing_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.is_pos_def"><code class="docutils literal notranslate"><span class="pre">is_pos_def()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.normality"><code class="docutils literal notranslate"><span class="pre">normality()</span></code></a></li>
 </ul>
 </li>
