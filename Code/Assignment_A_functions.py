@@ -178,22 +178,21 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
              color='skyblue', 
              edgecolor='black', 
              alpha=0.7, 
-             label="Data histogram")
+             label=f'Data histogram (Lilliefors Test: stat={stat:.3f}, p={p_value:.3f})')
     
     plt.plot(x, 
              pdf, 
              'r-', 
              lw=2, 
-             label=f'Fitted normal\n(mean={mu:.2f}, sd={sigma:.2f})')
+             label=f'Fitted normal curve\n(mean={mu:.2f}, sd={sigma:.2f})')
     
     plt.xlim(var_range)
-    plt.title(f"Lilliefors Test: stat={stat:.3f}, p={p_value:.3f}")
-    plt.xlabel("Data values")
-    plt.ylabel("Density")
+    plt.xlabel(var_name)
+    plt.ylabel('Density')
     plt.legend()
-    plt.savefig('../Results/liliefors_test.png')
-    plt.grid(alpha=0.3)
+    plt.savefig(f'../Results/liliefors_test_{var_name}.png') # How to save it under the right name!!!!!
     plt.show()
+    plt.close()
      
     print(f'\n=== LILLIEFORS TEST: {var_name} ===\n',
           '\nSTAT: ', stat, 
@@ -264,12 +263,13 @@ def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float):
             plt.figure(figsize=(6,6))
             plt.scatter(data.iloc[non_outlier_mask, 0], data.iloc[non_outlier_mask, 1], color='blue', label='Non-outliers')
             plt.scatter(data.iloc[outlier_mask, 0], data.iloc[outlier_mask, 1], color='red', label='Outliers')
-            plt.xlabel('X')
-            plt.ylabel('Y')
-            plt.title('Scatter Plot with Outliers Highlighted')
+            plt.xlabel('Variable 1')
+            plt.ylabel('Variable 2')
             plt.legend()
-            plt.grid(True)
+            plt.savefig('../Results/outlier.png')
             plt.show()
+            plt.close()
+     
             
             print('\n=== MAHALANOBIS TEST ===\n',
                   '\nOUTLIER THRESHOLD: ', p_values,
@@ -397,22 +397,13 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
               '\np <= 0.05: Correlation is significant' if p_value <= 0.05 
               else '\np > 0.05: Correlation is insignificant\n')
     
-    # Fit linear regression (slope and intercept)
-    slope, intercept = np.polyfit(var1, var2, 1)
-    y_pred = slope * var1 + intercept
-    
     plt.scatter(var1, var2, 
                 color='royalblue', 
                 label='Data points',
                 alpha=0.5)
-    
-    plt.plot(var1, y_pred, 
-             color='red', 
-             label=f'Linear fit: y={slope:.2f}x+{intercept:.2f}')
-    
+
     plt.xlabel("var 1")
     plt.ylabel("var 2")
-    plt.title(f"Spearman correlation: rho = {correlation:.2f}, p = {p_value:.3f}")
     plt.xlim(var1_range)
     plt.ylim(var2_range)
     plt.legend()
@@ -420,3 +411,46 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
     plt.show()
   
     return norm_p_values, correlation, p_value
+#%% Conclusion
+def conclusion(p_value: float, alpha: float, correlation: float, positive: bool):
+    '''
+    Conclusion
+   
+    State the conclusion on the signficance of the correlation based on the p-value and alpha.
+    Parameters
+    ----------
+    p_value: float
+        The calculated p-value.
+    alpha: float
+        the defined significance level.
+    Returns
+    -------
+    conclusion: str
+       A statement with a conclusion based on p-value and alpha.
+    --------
+    >>> conclusion(0.03, 0.05)
+    'Since the identified p-value (0.03) is below the significance level (0.05),
+    we can conclude that the observed the correlation is statistically significant.'
+    '''
+    
+    if correlation > 0 and positive==True or correlation < 0 and positive==False:
+        relation_statement = (f'The correlation coefficient ({correlation}),'
+                              ' indicates a synergy between the two SDG indicators.')
+        
+    elif correlation > 0 and positive==False or correlation < 0 and positive==True:
+        relation_statement = (f'The correlation coefficient ({correlation}),'
+                              ' indicates a trade-off between the two SDG indicators.')    
+    else:
+        relation_statement = ('A correlation coefficient of 0 indicates no trade-offs or synergys between'
+                              'the two SDG indicators.')
+    
+    if p_value > alpha:
+        conclusion_statement = (f'\nSince the identified p-value ({p_value}) is above the significance level ({alpha}),'
+                                ' we can conclude that the observed the correlation is statistically insignificant.')    
+    else:
+        conclusion_statement = (f'\nSince the identified p-value ({p_value}) is below the significance level ({alpha}),'
+                                ' we can conclude that the observed the correlation is statistically significant.') 
+    
+    
+     
+    return relation_statement + conclusion_statement
