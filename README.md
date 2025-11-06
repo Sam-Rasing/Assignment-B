@@ -32,11 +32,15 @@ Data 4: WPP2024_TotalPopulationBySex.csv.gz
 **Result**
 
 The output of running the code is saved in the results folder, which includes the following: 
-Result 1: sdg_correlation.txt
-Result 2: bubble.png
-Result 3: map.png
-Result 4: hist_var1.png
-Result 5: hist_var2.png
-Result 6: Mahalanobis_distances.png
-Result 7: scatter.png
+Result 1: bubble.png
+Result 2: liliefors_test_SDG 2.4.1, Sustainable Agriculture Index.png
+Result 3: liliefors_test_SDG 15.5.1, Red List Index.png
+Result 4: map.png
+Result 5: map_SDG 2.4.1, Sustainable Agriculture Index.png
+Result 6: map_SDG 15.5.1, Red List Index.png
+Result 7: outlier.png
+Result 8: scatter.png
+Result 9: sdg_correlation.png
+
+
 

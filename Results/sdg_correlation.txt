@@ -1,12 +1,13 @@
 === CONCLUSION ===
 
  This analysis used inferential statistics to answer the research question whether there is a synergy or correlation between: 
- - SDG 2.4.1, Sustainable Agriculture 
- - SDG 15.5.1, Red list index 
+ - SDG 2.4.1, Sustainable Agriculture Index 
+ - SDG 15.5.1, Red List Index 
 
 The results obtained from the Spearnmanr test are the following: 
  - Correlation coefficient: 0.2961735916165568 
  - P-value: 0.07829126107490848 
 
  The correlation coefficient (0.2961735916165568), indicates a trade-off between the two SDG indicators.
+
 Since the identified p-value (0.07829126107490848) is above the significance level (0.05), we can conclude that the observed the correlation is statistically insignificant.

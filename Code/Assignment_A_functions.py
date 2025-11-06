@@ -133,7 +133,7 @@ def filter_data(var1: pd.DataFrame, var2: pd.DataFrame):
 
 #%% Normality check
 
-def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
+def normality(var: pd.Series, var_meta: pd.Series, alpha: float):
     '''
     Normality Check
 
@@ -144,13 +144,10 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     ----------
     var: pd.Series
         The country values of SDG indicator to test for normality.
-    var_name: str
-        The name of the variable.
-    var_range: list
-        The minimum and maximum possible value of the SDG indicator.
+    var_meta: pd.Series
+        The name and range of the SDG indicator
     alpha: float
         The significance level for the lillieforst test.
-    
     Returns
     -------
     p_value: float
@@ -166,19 +163,22 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     0.59
     '''
     stat, p_value = lilliefors(var)
-       
+    
+    var_name = var_meta.iloc[0]
+    var_range = var_meta.iloc[1]
+    
     mu, sigma = np.mean(var), np.std(var)
-    x = np.linspace(min(var), max(var), 200)
+    x = np.linspace(var_range[0], var_range[1], 200)
     pdf = norm.pdf(x, mu, sigma)   
     
-    plt.figure(figsize=(10, 7))
+    plt.figure(figsize=(7, 5))
     plt.hist(var, 
              bins=20, 
              density=True, 
-             color='skyblue', 
+             color='royalblue', 
              edgecolor='black', 
-             alpha=0.7, 
-             label=f'Data histogram (Lilliefors Test: stat={stat:.3f}, p={p_value:.3f})')
+             alpha=0.5, 
+             label='SDG distribution')
     
     plt.plot(x, 
              pdf, 
@@ -190,7 +190,8 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
     plt.xlabel(var_name)
     plt.ylabel('Density')
     plt.legend()
-    plt.savefig(f'../Results/liliefors_test_{var_name}.png') # How to save it under the right name!!!!!
+    plt.tight_layout()
+    plt.savefig(f'../Results/liliefors_test_{var_name}.png', dpi=600)
     plt.show()
     plt.close()
      
@@ -205,7 +206,7 @@ def normality(var: pd.Series, var_name: str, var_range: list, alpha: float):
 #%% Outlier treatment based on Mahalanobis distances
 
 
-def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float):
+def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float, var_meta: pd.DataFrame):
     '''
     Calculating the Mahalanobis Distance
   
@@ -260,20 +261,28 @@ def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float):
             outlier_mask = p_values < alpha
             non_outlier_mask = p_values >= alpha
             
-            plt.figure(figsize=(6,6))
-            plt.scatter(data.iloc[non_outlier_mask, 0], data.iloc[non_outlier_mask, 1], color='blue', label='Non-outliers')
-            plt.scatter(data.iloc[outlier_mask, 0], data.iloc[outlier_mask, 1], color='red', label='Outliers')
-            plt.xlabel('Variable 1')
-            plt.ylabel('Variable 2')
+            plt.figure(figsize=(7,5))
+            plt.scatter(data.iloc[non_outlier_mask, 0], data.iloc[non_outlier_mask, 1], 
+                        color='royalblue', 
+                        label='Non-outliers',
+                        alpha=0.5)
+            
+            plt.scatter(data.iloc[outlier_mask, 0], data.iloc[outlier_mask, 1], 
+                        color='red', 
+                        label='Outliers')
+            
+            plt.xlabel(var_meta.iloc[0, 0])
+            plt.ylabel(var_meta.iloc[1, 0])
+            plt.xlim(var_meta.iloc[0, 1])
+            plt.ylim(var_meta.iloc[1, 1])
+            plt.tight_layout()
             plt.legend()
-            plt.savefig('../Results/outlier.png')
+            plt.savefig('../Results/outlier.png', dpi=600)
             plt.show()
             plt.close()
      
             
             print('\n=== MAHALANOBIS TEST ===\n',
-                  '\nOUTLIER THRESHOLD: ', p_values,
-                  '\nMAX MAHALANOBIS DISTANCE:', np.max(mahalanobis_dist),
                   '\nTOTAL OUTLIERS:', np.sum(outlier_mask == True))
             return mahalanobis_dist, p_values, non_outlier_mask
         else:
@@ -323,17 +332,14 @@ def is_pos_def(A):
     
 
 #%% Statistical analysis
-def analysing_data(var1: pd.Series, var2: pd.Series,
-                   var1_range: list, var2_range: list,
-                   var1_name: str, var2_name: str,
-                   alpha: float):   
+def analysing_data(var1: pd.Series, var2: pd.Series, alpha: float, var_meta: pd.DataFrame):   
     '''
     Data Analysis
    
-    Calculate the correlation between two SDG indicators based.
+    Calculate the correlation between two SDG indicators based on normality of the data.
     - If both variables are normally distributed, a parametric test (Pearson correlation) is applied.
     - If not, a non-parametric test (Spearman correlation) is used.
-    Outliers are removed based on the Mahalanobis distance before performing the correlation analysis.
+    Outliers are removed based on the Mahalanobis distance before running the correlation test.
     
     Parameters
     ----------
@@ -341,16 +347,10 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
         The first SDG indicator series.
     var2: pd.Series
         The second SDG indicator series.
-    var1_range: list 
-        Theoretical range of first SDG indicator.
-    var2_range: list
-        Theoretical range of second SDG indicator.
-    var1_name: str 
-        Name of first SDG indicator.
-    var2_name: str
-        Name of second SDG indicator.
     alpha: float
         Significance level used for normality, outlier detection and correlation test.
+    var_meta: pd.DataFrame 
+        Dataframe with theoretical ranges and names of both SDG indicators.
     Returns
     -------
     norm_p_values: list of float
@@ -370,14 +370,29 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
     0.003
     '''
     # Testing for normality
-    norm_p_values = [normality(var1, var1_name, var1_range, alpha),
-                normality(var2, var2_name, var2_range, alpha)] 
-       
+    norm_p_values = [normality(var1, var_meta.iloc[0, :], alpha),
+                     normality(var2, var_meta.iloc[1, :], alpha)] 
+    
+    plt.figure(figsize=(7, 5))
+    plt.scatter(var1, var2, 
+                color='royalblue', 
+                label='Data points',
+                alpha=0.5)
+
+    
+    plt.xlabel(var_meta.iloc[0, 0])
+    plt.ylabel(var_meta.iloc[1, 0])
+    plt.xlim(var_meta.iloc[0, 1])
+    plt.ylim(var_meta.iloc[1, 1])
+    plt.tight_layout()
+    plt.savefig('../Results/scatter.png', dpi=600)
+    plt.show()
+    
     # Outlier removal
-    mahalanobis_dist, threshold, outliers_mask = Mahalanobis_test(var1, var2, alpha) 
+    mahalanobis_dist, threshold, non_outliers_mask = Mahalanobis_test(var1, var2, alpha, var_meta) 
       
-    var1_no_outliers = var1[outliers_mask]
-    var2_no_outliers = var2[outliers_mask]
+    var1_no_outliers = var1[non_outliers_mask]
+    var2_no_outliers = var2[non_outliers_mask]
      
     # Testing for correlation        
     if norm_p_values[0] <= 0.05 or norm_p_values[1] <= 0.05:  # One or both variables are normal distributed, therefore non-parametric test is selected 
@@ -396,21 +411,9 @@ def analysing_data(var1: pd.Series, var2: pd.Series,
               '\nP-value:', p_value,
               '\np <= 0.05: Correlation is significant' if p_value <= 0.05 
               else '\np > 0.05: Correlation is insignificant\n')
-    
-    plt.scatter(var1, var2, 
-                color='royalblue', 
-                label='Data points',
-                alpha=0.5)
-
-    plt.xlabel("var 1")
-    plt.ylabel("var 2")
-    plt.xlim(var1_range)
-    plt.ylim(var2_range)
-    plt.legend()
-    plt.savefig('../Results/scatter.png')
-    plt.show()
   
     return norm_p_values, correlation, p_value
+
 #%% Conclusion
 def conclusion(p_value: float, alpha: float, correlation: float, positive: bool):
     '''
@@ -445,7 +448,7 @@ def conclusion(p_value: float, alpha: float, correlation: float, positive: bool)
                               'the two SDG indicators.')
     
     if p_value > alpha:
-        conclusion_statement = (f'\nSince the identified p-value ({p_value}) is above the significance level ({alpha}),'
+        conclusion_statement = (f'\n\nSince the identified p-value ({p_value}) is above the significance level ({alpha}),'
                                 ' we can conclude that the observed the correlation is statistically insignificant.')    
     else:
         conclusion_statement = (f'\nSince the identified p-value ({p_value}) is below the significance level ({alpha}),'

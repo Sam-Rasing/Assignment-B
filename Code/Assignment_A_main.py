@@ -33,20 +33,24 @@ if __name__ == "__main__":
         - https://unstats.un.org/sdgs/dataportal/database. 
     
     For this analysis the following two SDG indicators are selected:
-        - SDG 2.4.1: Sustainable Agriculture
+        - SDG 2.4.1: Sustainable Agriculture 
         - SDG 15.5.1: Red list index
     '''
     
     # Define the name of both SDGs:
-    var1_name = 'SDG 2.4.1, Sustainable Agriculture' 
-    var2_name = 'SDG 15.5.1, Red list index' 
+    var1_name = 'SDG 2.4.1, Sustainable Agriculture Index' 
+    var2_name = 'SDG 15.5.1, Red List Index' 
     
     # Define the theoretical ranges for both SDGs:
     var1_range = [1, 5] 
     var2_range = [0, 1] 
     
+    # Meta data used for plotting: 
+    sdg_meta = pd.DataFrame({'Variable Name': [var1_name, var2_name],
+                             'Range': [var1_range, var2_range]})
+    
     # Define the relationship
-    positive = False  # The SDGs have opposite directions in terms of better outcomes.
+    positive = False  # The SDG 2.4.1 and 15.5.1 have opposite directions in terms of better outcomes.
     
     # Define the file names for both SDG datasets 
     data_folder = root_path + 'Data/'
@@ -80,10 +84,11 @@ if __name__ == "__main__":
     alpha = 0.05 # 0.01 -> 99% confidence, 0.05 -> 95% confidence, 0.1 -> 90% confidence 
     
     # Select variable column based on recent_year
-    norm_p_values, p_value, correlation_result = af.analysing_data(var1[recent_year], var2[recent_year],
-                                                                    var1_range, var2_range,
-                                                                    var1_name,  var2_name,
-                                                                    alpha)
+    norm_p_values, p_value, correlation_result = af.analysing_data(var1[recent_year], var2[recent_year], 
+                                                                   alpha,
+                                                                   sdg_meta)
+    
+    print(af.conclusion(p_value, alpha, correlation_result, positive))
     
 #%% Plotting results
     
@@ -132,8 +137,10 @@ if __name__ == "__main__":
     plt.xlim(var1_range)
     plt.ylim(var2_range)
     plt.xlabel(var1_name)
-    plt.ylabel(var2_name)   
-    plt.savefig('../Results/bubble.png')   
+    plt.ylabel(var2_name)
+    plt.tight_layout()
+    plt.savefig('../Results/bubble.png', dpi=600)   
+    plt.tight_layout()
     plt.show()
     plt.close()
 
@@ -163,7 +170,8 @@ if __name__ == "__main__":
     plt.yticks([])
     plt.xlim([-180, 180]) 
     plt.ylim([-60, 90])
-    plt.savefig(f'../Results/map_{var1_name}.png')
+    plt.tight_layout()
+    plt.savefig(f'../Results/map_{var1_name}.png', dpi=600)
     plt.show()
     plt.close()
        
@@ -181,7 +189,8 @@ if __name__ == "__main__":
     plt.yticks([])
     plt.xlim([-180, 180]) 
     plt.ylim([-60, 90])
-    plt.savefig(f'../Results/map_{var2_name}.png')
+    plt.tight_layout()
+    plt.savefig(f'../Results/map_{var2_name}.png', dpi=600)
     plt.show()
     plt.close()
 
@@ -229,10 +238,11 @@ if __name__ == "__main__":
           fontsize=12,
           framealpha=1)  
     
+    ax.grid(False)
     ax.set_xticks([]) 
     ax.set_yticks([]) 
-    
-    plt.savefig('../Results/map.png')
+    plt.tight_layout()
+    plt.savefig('../Results/map.pdf', dpi=600)
     plt.show()
     plt.close()
     
@@ -253,7 +263,6 @@ if __name__ == "__main__":
           '\n\n', af.conclusion(p_value, alpha, correlation_result, positive), file=f)
     
     f.close()
-
     
 #%% Disable code profiler
     
