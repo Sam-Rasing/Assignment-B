@@ -53,7 +53,7 @@ def importing_data(data_folder: str, file_name: str, index: str, columns: list, 
     df = None
     df = pd.read_excel(data_folder + file_name, 
                        index_col=index, 
-                       usecols=lambda col: col in columns)
+                       usecols=lambda col: col in columns) #-AI(This lambda function is developed with the use of AI)AI-#
 
     print(f'\n=== SANITY CHECK: {var_name} ===\n',
           '\nNUMBER OF ROWS:', len(df),
@@ -184,7 +184,7 @@ def normality(var: pd.Series, var_meta: pd.Series, alpha: float):
              pdf, 
              'r-', 
              lw=2, 
-             label=f'Fitted normal curve\n(mean={mu:.2f}, sd={sigma:.2f})')
+             label=f'Fitted normal curve\n(mean={mu:.2f}, sd={sigma:.2f})') #-AI(The idea to use f-strings is developed with the use of AI)AI-#
     
     plt.xlim(var_range)
     plt.xlabel(var_name)
@@ -250,6 +250,7 @@ def Mahalanobis_test(var1: pd.Series, var2: pd.Series, alpha: float, var_meta: p
             vars_mean = data.mean(axis=0)
             diff = data - vars_mean
             mahalanobis_dist = []
+     
             for i in range(len(diff)):
                 mahalanobis_dist.append(np.sqrt(diff.iloc[i].dot(inv_covariance_matrix).dot(diff.iloc[i])))
                 

@@ -129,7 +129,8 @@ if __name__ == "__main__":
     size = pop['PopTotal']/1e3
     
     plt.scatter(x, y, size, c=colors, alpha=0.5)
-   
+    
+    #-AI(This loop has been developed with the use of AI)AI-#
     for country in top_10: # label top 10 populous countries
         plt.annotate(country, (var1.loc[country, recent_year], var2.loc[country, recent_year]), 
                          fontsize=9, ha='center', va='center',)
@@ -223,6 +224,7 @@ if __name__ == "__main__":
                    legend_kwds={'loc': 'lower left', 'title': ''}, 
                    missing_kwds={'color': 'lightgrey'})
     
+    #-AI(The idea to use patch to label the legend is developed with the use of AI)AI-#
     legend_elements = [
     Patch(facecolor='crimson', label='Both targets below average'),
     Patch(facecolor='gold', label='One target above average'),

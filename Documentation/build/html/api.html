@@ -41,7 +41,7 @@ Created on Sun Oct 19 13:57:40 2025</p>
 <p>&#64;author: Sam</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.Mahalanobis_test">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">Mahalanobis_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.Mahalanobis_test" title="Link to this definition">¶</a></dt>
 <dd><p>Calculating the Mahalanobis Distance</p>
 <p>Compute the Mahalanobis distance for two variables to identify multivariate outliers.
 An outlier threshold is determined based on the specified significance level (alpha) and used to generate an outlier mask.
@@ -77,22 +77,19 @@ The implementation is adapted from <a class="reference external" href="https://s
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.analysing_data">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">analysing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var1_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.analysing_data" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">analysing_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.analysing_data" title="Link to this definition">¶</a></dt>
 <dd><p>Data Analysis</p>
-<p>Calculate the correlation between two SDG indicators based.
+<p>Calculate the correlation between two SDG indicators based on normality of the data.
 - If both variables are normally distributed, a parametric test (Pearson correlation) is applied.
 - If not, a non-parametric test (Spearman correlation) is used.
-Outliers are removed based on the Mahalanobis distance before performing the correlation analysis.</p>
+Outliers are removed based on the Mahalanobis distance before running the correlation test.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>var1</strong> (<em>pd.Series</em>) – The first SDG indicator series.</p></li>
 <li><p><strong>var2</strong> (<em>pd.Series</em>) – The second SDG indicator series.</p></li>
-<li><p><strong>var1_range</strong> (<em>list</em>) – Theoretical range of first SDG indicator.</p></li>
-<li><p><strong>var2_range</strong> (<em>list</em>) – Theoretical range of second SDG indicator.</p></li>
-<li><p><strong>var1_name</strong> (<em>str</em>) – Name of first SDG indicator.</p></li>
-<li><p><strong>var2_name</strong> (<em>str</em>) – Name of second SDG indicator.</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – Significance level used for normality, outlier detection and correlation test.</p></li>
+<li><p><strong>var_meta</strong> (<em>pd.DataFrame</em>) – Dataframe with theoretical ranges and names of both SDG indicators.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -114,6 +111,29 @@ Outliers are removed based on the Mahalanobis distance before performing the cor
 <span class="go">0.003</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Assignment_A_functions.conclusion">
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">conclusion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correlation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.conclusion" title="Link to this definition">¶</a></dt>
+<dd><p>Conclusion</p>
+<p>State the conclusion on the signficance of the correlation based on the p-value and alpha.
+:param p_value: The calculated p-value.
+:type p_value: float
+:param alpha: the defined significance level.
+:type alpha: float</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>conclusion</strong> (<em>str</em>) – A statement with a conclusion based on p-value and alpha.</p></li>
+<li><p><em>——–</em></p></li>
+<li><p><em>&gt;&gt;&gt; conclusion(0.03, 0.05)</em></p></li>
+<li><p><em>’Since the identified p-value (0.03) is below the significance level (0.05),</em></p></li>
+<li><p><em>we can conclude that the observed the correlation is statistically significant.’</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -211,7 +231,7 @@ This function is obtained from <a class="reference external" href="https://stack
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Assignment_A_functions.normality">
-<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.normality" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assignment_A_functions.</span></span><span class="sig-name descname"><span class="pre">normality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Assignment_A_functions.normality" title="Link to this definition">¶</a></dt>
 <dd><p>Normality Check</p>
 <p>Assess whether a variable follows a normal distribution using a visual plot and a Lilliefors test.
 The assessment is based on a specified significance level (alpha).</p>
@@ -219,25 +239,26 @@ The assessment is based on a specified significance level (alpha).</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>var</strong> (<em>pd.Series</em>) – The country values of SDG indicator to test for normality.</p></li>
-<li><p><strong>var_name</strong> (<em>str</em>) – The name of the variable.</p></li>
-<li><p><strong>var_range</strong> (<em>list</em>) – The minimum and maximum possible value of the SDG indicator.</p></li>
+<li><p><strong>var_meta</strong> (<em>pd.Series</em>) – The name and range of the SDG indicator</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – The significance level for the lillieforst test.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>p_value</strong> (<em>float</em>) – The obeserved p-value from the lilliefors test.</p></li>
-<li><p><em>——–</em></p></li>
-<li><p><em>&gt;&gt;&gt; p_value = normality(variable_1, ‘name_1’, [0, 10], 0.5)</em></p></li>
-<li><p><em>p_value</em></p></li>
-<li><p><em>0.019</em></p></li>
-<li><p><em>&gt;&gt;&gt; p_value = normality(variable_2, ‘name_2’, [1, 2], 0.01)</em></p></li>
-<li><p><em>p_value</em></p></li>
-<li><p><em>0.59</em></p></li>
-</ul>
-</p>
+<dd class="field-even"><p><strong>p_value</strong> – The obeserved p-value from the lilliefors test.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p_value</span> <span class="o">=</span> <span class="n">normality</span><span class="p">(</span><span class="n">variable_1</span><span class="p">,</span> <span class="s1">&#39;name_1&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="go">p_value</span>
+<span class="go">0.019</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_value</span> <span class="o">=</span> <span class="n">normality</span><span class="p">(</span><span class="n">variable_2</span><span class="p">,</span> <span class="s1">&#39;name_2&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="go">p_value</span>
+<span class="go">0.59</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
@@ -264,6 +285,7 @@ The assessment is based on a specified significance level (alpha).</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Code Documentation SAPY Sam Rasing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.Mahalanobis_test"><code class="docutils literal notranslate"><span class="pre">Mahalanobis_test()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.analysing_data"><code class="docutils literal notranslate"><span class="pre">analysing_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.conclusion"><code class="docutils literal notranslate"><span class="pre">conclusion()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.filter_data"><code class="docutils literal notranslate"><span class="pre">filter_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.importing_data"><code class="docutils literal notranslate"><span class="pre">importing_data()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Assignment_A_functions.is_pos_def"><code class="docutils literal notranslate"><span class="pre">is_pos_def()</span></code></a></li>

@@ -4,10 +4,16 @@
 
 This repository contains my submission for Assignment A for the course Sustainability Analysis in Python. 
 The code in this assignment can be used to analyze the relationship between a social and an environmental Sustainable Development Goal (SDG) of the United Nations (UN). 
-For the scope of this project, I have selected the following two SDGs:
-- SDG 2.4.1: Sustainable Agriculture
-- SDG 15.5.1: Red list index
-The repository includes all files used and created when running the code file Assignment_A_main, which is placed in the Code folder.
+For this specific project, I have selected the following two SDGs:
+- SDG 2.4.1: Sustainable Agriculture Index
+- SDG 15.5.1: Red list Index
+
+Within this repository you can find all necessary folders to run the analysis. 
+
+1) Create a new environment based on the fil named environment.yaml, placed in the Environment folder.
+2) If you want to analyse different SDGs, download your data from here: https://unstats.un.org/sdgs/dataportal/database, and place it in the Data folder.
+3) Run the Assignment_A_main.py placed in the Code folder, and follow the instruction given within the document. 
+4) Open the results in the Results folder.
 
 **Data**
 
@@ -29,7 +35,7 @@ Data 4: WPP2024_TotalPopulationBySex.csv.gz
 - Total Population data for all countries is obtained from the UN World Population Prospects.
 - https://population.un.org/wpp/downloads?folder=Standard%20Projections&group=CSV%20format. 
 
-**Result**
+**Results**
 
 The output of running the code is saved in the results folder, which includes the following: 
 Result 1: bubble.png
@@ -42,5 +48,16 @@ Result 7: outlier.png
 Result 8: scatter.png
 Result 9: sdg_correlation.png
 
+**AI disclaimer**
+I acknowledge the use of Large language models (LLMs) during the development of this analysis. 
+Specifically, AI was used to:
+- Explain and troubleshoot errors
+- Enhance data visualizations and plots
+- Suggest optimization options
+- Brainstorming
+- Code improvements
+
+Within both Python files, comments have been added to indicate which parts of the code were generated or assisted by AI.
+ 
 
 
